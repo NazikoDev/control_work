@@ -1,0 +1,39 @@
+<h1>Супер, продолжай дальше</h1>
+
+<h1>Фильмы</h1>
+<a href="{% url 'cineboard:create_film' %}">Добавить фильм</a>
+
+<ol>
+  {% for i in tv_lst %}
+  <li>
+    <h2>{{ i.title }}</h2>
+    <p>{{ i.created_at }}</p>
+    <p>{{ i.description }}</p>
+
+    Теги:
+    {% for tag in i.tags.all %}
+      {{ tag.name }}{% if not forloop.last %}, {% endif %}
+    {% empty %}
+      без тегов
+    {% endfor %}
+
+    <br>
+
+    <h3>Комменты</h3>
+    <ol>
+      {% for comment in i.rating.all %}
+      <li>
+        <strong>{{ comment.stars }}★</strong><br>
+        <p>{{ comment.text }}</p>
+      </li>
+      {% empty %}
+      <li>Комментариев пока нет</li>
+      {% endfor %}
+    </ol>
+
+   <a href="{% url 'cineboard:update' i.id %}">Изменить фильм</a>
+<a href="{% url 'cineboard:delete' i.id %}">Удалить фильм</a>
+
+  </li>
+  {% endfor %}
+</ol>
