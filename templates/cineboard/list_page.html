@@ -1,0 +1,20 @@
+{% extends "cineboard/base.html" %}
+
+{% block content %}
+<h2>Список фильмов</h2>
+
+<ul>
+{% for film in films %}
+    <li>
+        {{ film.title }} ({{ film.year }})
+        <a href="{% url 'cineboard:update_film' film.id %}">✏️</a>
+        <form action="{% url 'cineboard:delete_film' film.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">🗑</button>
+        </form>
+    </li>
+{% empty %}
+    <li>Фильмов нет</li>
+{% endfor %}
+</ul>
+{% endblock %}
